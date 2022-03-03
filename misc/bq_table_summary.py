@@ -2,11 +2,13 @@ def bq_table_summary(table_name, bq_client, len_topcounts=10):
   
   import pandas as pd
   import jinja2
-      
+        
   # column names
 
   if " " in table_name:
-      query_limit_1 = f"SELECT * FROM ({table_name}) LIMIT 1"
+      if table_name[0] != "(":
+        table_name = f"({table_name})"
+      query_limit_1 = f"SELECT * FROM {table_name} LIMIT 1"
       field_names = bq_client.query(query_limit_1).to_dataframe().columns.to_list()
   else:
       schema = bq_client.get_table(table_name).schema
