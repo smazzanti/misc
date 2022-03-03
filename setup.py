@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='misc',
-    version='0.0.1',
+    version='0.0.2',
     description='Miscellanea',
     url='https://github.com/smazzanti/misc',
     author='Samuele Mazzanti',
