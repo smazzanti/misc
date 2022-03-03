@@ -1,6 +1,5 @@
-
-
 def bq_table_summary(table_name, bq_client, len_topcounts=10):
+  
   import pandas as pd
   import jinja2
       
