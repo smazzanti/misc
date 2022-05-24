@@ -1,0 +1,20 @@
+from google.api_core import page_iterator
+from google.cloud import storage
+
+def list_directories(bucket_name, prefix):
+    """Example: list_directories("org-data-science-lab", "deleteme/tmp.parquet")"""
+    iterator = page_iterator.HTTPIterator(
+        client=storage.Client(),
+        api_request=storage.Client()._connection.api_request,
+        path="/b/" + bucket_name + "/o",
+        items_key='prefixes',
+        item_to_value=lambda iterator, item: item,
+        extra_params={
+            "projection": "noAcl",
+            "prefix": prefix+'/' if prefix and not prefix.endswith('/') else prefix,
+            "delimiter": '/'}
+    )
+    return [it for it in iterator]
+
+def list_files(bucket_name, prefix):
+    return [blob.id for blob in storage.Client().list_blobs(bucket_name, prefix=prefix)]
